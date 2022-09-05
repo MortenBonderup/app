@@ -37,6 +37,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
+    margin-right: 35px;
 }
 
 .inputField,

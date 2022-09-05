@@ -13,6 +13,7 @@ export default class Controller {
         <td>${guitar.getBackWood()}</td>
         <td>${guitar.getTopWood()}</td>
         <td>${guitar.getPrice()}</td>
+        <td><button type="button" id="${guitar.getSerialNumber()}">Delete</button></td>
         </tr>
         `
     }
@@ -45,5 +46,31 @@ export default class Controller {
             </tr>`;
         }
         this.view.message(template);
+    }
+
+    showAllGuitars() {
+        let template = "";
+        
+        for (const guitar of this.model.guitarList.allGuitars()) {
+            template += this.buildTemplate(guitar);
+        }
+        this.view.message(template);
+    }
+
+    newGuitar(guitar) {
+        const doesGuitarAlreadyExist = this.model.guitarList.getGuitar(guitar.serialNumber);
+
+        if (doesGuitarAlreadyExist === null) {
+            this.model.guitarList.addGuitar(guitar.serialNumber, guitar.price, guitar.builder, guitar.model, guitar.type, guitar.backwood, guitar.topwood);
+            this.view.snackbar("The guitar was saved");
+            this.showAllGuitars();
+        } else {
+            this.view.snackbar("The guitar already exist");
+        }
+    }
+
+    deleteGuitar(sn) {
+        this.model.guitarList.deleteGuitar(sn);
+        this.view.snackbar("The guitar was deleted!");
     }
 }

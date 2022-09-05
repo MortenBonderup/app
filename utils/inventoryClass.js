@@ -31,4 +31,25 @@ export default class Inventory {
         }
         return null;
     }
+
+    compare_lsn( a, b )
+    {
+    if ( a.serialNumber.toLowerCase() < b.serialNumber.toLowerCase()){
+      return -1;
+    }
+    if ( a.serialNumber.toLowerCase() > b.serialNumber.toLowerCase()){
+      return 1;
+    }
+    return 0;
+  }
+
+    allGuitars() {
+        this.guitars.sort(this.compare_lsn)
+        return this.guitars;
+    }
+
+    deleteGuitar(sn) {
+        const index=this.guitars.map(guitar => guitar.serialNumber).indexOf(sn);
+        this.guitars.splice(index, 1); // Removes guitar from guitar object list
+    }
 }
